@@ -1,0 +1,291 @@
+<!DOCTYPE HTML>
+<!--
+	Linear by TEMPLATED
+    templated.co @templatedco
+    Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>ABOUT CHICKEN</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,700,500,900' rel='stylesheet' type='text/css'>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-panels.min.js"></script>
+		<script src="js/init.js"></script>
+
+			<link rel="stylesheet" href="css/skel-noscript.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-desktop.css" />
+
+	</head>
+	<body>
+		
+
+	<!-- Header -->
+		<div id="header">
+			<div id="nav-wrapper"> 
+				<!-- Nav -->
+				<nav id="nav">
+					<ul>
+						<li><a href="index.html">首頁</a></li>
+						<li class="dropdown">
+							<a href="javascript:void(0)" class="dropbtn">小雞的家</a>
+					    		<div class="dropdown-content">
+					    			<a href="house.html">生長環境</a>
+					    			<a href="device.html">設備</a>
+					    		</div>
+						</li>
+						<li><a href="grow.html">小雞成長日誌</a></li>
+						<li class="dropdown">
+							<a href="javascript:void(0)" class="dropbtn">了解蛋蛋</a>
+					    		<div class="dropdown-content">
+					    			<a href="egg.html">種類介紹</a>
+					    			<a href="info.html">蛋的知識</a>
+					    			<a href="http://127.0.0.1:8000/cms/">今日蛋價</a>
+					    		</div>
+						</li>
+						<li class="dropdown">
+							<a href="javascript:void(0)" class="dropbtn">小雞遊戲</a>
+					    		<div class="dropdown-content">
+					    			<a href="game.html">雞不可失</a>
+					    		</div>
+						</li>					
+					</ul>
+				</nav>
+			</div>
+			<div class="container"> 
+				
+				<!-- Logo -->
+				<div id="logo">
+					<h1><span><img src="images/icon04.png" width="55" height="55">雞不可失</span></h1>
+				</div>
+			</div>
+		</div>
+	<!-- Header --> 
+
+	<!-- Main -->
+		<div id="main">
+			<div id="content" class="container">
+				<section>
+					<header style="text-align: center;">
+						<span style="font-size: 12pt;">請按下 <img src="images/game/enter.png" width="65" height="45"> 開始遊戲　　　　用 <img src="images/game/wasd.png" width="80" height="70"> 來控制可愛的小雞</span>
+						<br><br>						
+
+
+						<canvas id="myCanvas" width="600" height="400"></canvas>
+					</header>
+
+<script>
+	// JavaScript code goes here
+	//*************宣告**************//
+	var canvas = document.getElementById("myCanvas");
+	var ctx = canvas.getContext("2d");
+	var x = 0;
+	var y = 0;
+	var dx = 2;
+	var dy = -2;
+	var gamepoint =0;
+	var ballRadius = 0;
+	var paddleHeight = 10;
+	var paddleWidth = 75;
+	var paddleX = (canvas.width-paddleWidth)/2;
+	var paddleY = (canvas.height-paddleHeight)/2;
+	var rightPressed = false;
+	var leftPressed = false;
+	var upPressed = false;
+	var downPressed = false;
+	var brickRowCount = 3;
+	var brickColumnCount = 5;
+	var trash = 1;
+	var img = new Image();
+    img.src = "images/game/chicken.png";
+
+
+	document.addEventListener("keydown", keyDownHandler, false);
+	document.addEventListener("keyup", keyUpHandler, false);
+	function keyDownHandler(e) {
+		var k = e.keyCode;
+		switch(k){
+			case 65:
+			leftPressed = true;
+			rightPressed =false;
+			upPressed = false;
+			downPressed = false;
+			break;
+			case 87:
+			leftPressed = false;
+			rightPressed =false;
+			upPressed = true;
+			downPressed = false;
+			break;
+			case 68:
+			leftPressed = false;
+			rightPressed =true;
+			upPressed = false;
+			downPressed = false;
+			break;
+			case 83:
+			leftPressed = false;
+			rightPressed =false;
+			upPressed = false;
+			downPressed = true;
+			break;
+			case 13:
+			if(trash>0){
+			window.setInt=setInterval(draw,10);//每10毫秒呼叫一次
+			trash-=1;
+			}
+			break;
+			case 88:
+			//if (trash=0)
+			clearInterval(setInt);
+			trash +=1;
+			window.alert("按下Enter繼續遊戲！")
+			break;
+		}
+}
+	function keyUpHandler(e) {
+		var k = e.keyCode;
+		switch(k){
+			case 65:
+			leftPressed = false;
+			break;
+			case 87:
+			upPressed = false;
+			break;
+			case 68:
+			rightPressed =false;
+			break;
+			case 83:
+			downPressed = false;
+			break;
+		}
+}
+	//*************************************//
+
+	function drawBall() {
+		var img01 = new Image();
+		img01.src = "images/game/killer.png";
+    // drawing code
+    ctx.beginPath();
+    img01.onload = function(){
+    ctx.drawImage(img01, x, y,50,50);
+
+}
+	ctx.closePath();
+}
+	//*****************球拍*****************
+	function drawPaddle() {
+	var img01 = new Image();
+	img01.src = "images/game/chicken.png";
+    ctx.beginPath();
+    img01.onload = function(){
+    ctx.drawImage(img01, paddleX, paddleY, 50, 50);
+}
+	//*****************結束探測****************
+	function endtest(){
+		if((paddleX-x<50 && paddleX-x>0) || (x-paddleX<50 && x-paddleX>0)){
+			if(paddleY-y<50 || y-paddleY<50){
+				window.alert("GG");
+
+			}
+		}
+	}
+
+
+
+	//****************************************
+	}
+	function draw(){
+	gamepoint += 1;
+	ctx.clearRect(0,0,canvas.width,canvas.height);
+	drawBall();
+	drawPaddle();
+	ctx.fillText(gamepoint, 10, 50);
+	//******************碰撞處理**************
+	if(x + dx > canvas.width - ballRadius-50 || x + dx < ballRadius) {
+    dx = -dx;
+	}
+
+	if(y + dy < ballRadius) {
+    dy = -dy;
+} else if(y + dy > canvas.height-30) {
+    if(x > paddleX && x < paddleX + paddleWidth) {
+        dy = -dy;
+    }
+    else {
+        dy = -dy;
+    }
+}
+	if(rightPressed && paddleX < canvas.width-50) {
+        paddleX += 7;
+    }
+    else if(leftPressed && paddleX > 0) {
+        paddleX -= 7;
+    }
+    else if(upPressed && paddleY >0 ) {
+        paddleY -= 7;
+    }
+    else if(downPressed && paddleY < canvas.height-50) {
+        paddleY += 7;
+    }
+	//***************************************
+	x += dx;
+	y += dy;
+	if((paddleX-x<50 && paddleX-x>0) || (x-paddleX<50 && x-paddleX>0)){
+			if((paddleY-y<50 && paddleY-y>0) || (y-paddleY<50 && y-paddleY>0)){
+				window.alert("恭喜你得到"+gamepoint+"分");
+				paddleX = (canvas.width-paddleWidth)/2;
+				paddleY = (canvas.height-paddleHeight)/2;
+				x = 0;
+				y = 0;
+				gamepoint = 0;
+			}
+		}
+}
+</script>
+
+					
+				</section>
+			</div>
+		</div>
+	<!-- /Main -->
+
+	<!-- Tweet -->
+		<div id="tweet">
+			<div class="container">
+				<section>
+					<blockquote><img src="images/01.png" width="145" height="50"></blockquote>
+				</section>
+			</div>
+		</div>
+	<!-- /Tweet -->
+
+	<!-- Footer -->
+		<div id="footer">
+			<div class="container">
+				<section>
+					<ul class="contact">
+						<li><a href="https://twitter.com/" class="fa fa-twitter"><span>Twitter</span></a></li>
+						<li><a href="https://www.facebook.com/" class="fa fa-facebook"><span>Facebook</span></a></li>
+						<li><a href="https://www.instagram.com" class="fa fa-instagram"><span>Instagram</span></a></li>
+					</ul>
+				</section>
+			</div>
+		</div>
+	<!-- /Footer -->
+
+	<!-- Copyright -->
+		<div id="copyright">
+			<div class="container">
+				<a>NTUST MIS</a><br>
+				<a>© Copyright 2019 | 網頁設計</a>
+			</div>
+		</div>
+
+
+	</body>
+</html>

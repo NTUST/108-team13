@@ -1,0 +1,130 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>ABOUT CHICKEN</title>
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<link rel="stylesheet" href="{% static 'css/skel-noscript.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/style-desktop.css' %}">
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<div id="header">
+			<div id="nav-wrapper"> 
+				<!-- Nav -->
+				<nav id="nav">
+					<ul>
+						<li><a href="index.html">首頁</a></li>
+						<li class="dropdown">
+							<a href="javascript:void(0)" class="dropbtn">小雞的家</a>
+					    		<div class="dropdown-content">
+					    			<a href="house.html">生長環境</a>
+					    			<a href="device.html">設備</a>
+					    		</div>
+						</li>
+						<li><a href="grow.html">小雞成長日誌</a></li>
+						<li class="dropdown">
+							<a href="javascript:void(0)" class="dropbtn">了解蛋蛋</a>
+					    		<div class="dropdown-content">
+					    			<a href="egg.html">種類介紹</a>
+					    			<a href="info.html">蛋的知識</a>
+					    			<a href="http://127.0.0.1:8000/cms/">今日蛋價</a>
+					    		</div>
+						</li>
+						<li class="dropdown">
+							<a href="javascript:void(0)" class="dropbtn">小雞遊戲</a>
+					    		<div class="dropdown-content">
+					    			<a href="game.html">雞不可失</a>
+					    		</div>
+						</li>					
+					</ul>
+				</nav>
+			</div>
+			<div class="container"> 
+				
+				<!-- Logo -->
+				<div id="logo">
+					<h1><span><img src="{% static 'images/icon08.png' %}" width="55" height="50">今日蛋價</span></h1>
+					
+				</div>
+			</div>
+		</div>
+
+		<div id="main" >
+			<div id="content" class="container">
+				<section>
+					<div class="container-fluid">
+					<table class="table" style="font-size: 18pt;">
+						<tr style="color: black;">
+							<td>雞蛋種類</td>
+							<td>價格(元/600克)</td>
+							<td>地區</td>
+
+						</tr>
+					{% for r in eggs.all %}
+					
+						<tr>
+			 				<td>{{ r.kind }}</td>
+			 				<td>{{ r.price}}</td>
+			 				<td>{{ r.region}}</td>
+						</tr>
+					
+					{% endfor %}
+					</table>
+					</div>
+				</section>
+			</div>
+		</div>
+
+	<!-- Tweet -->
+		<div id="tweet">
+			<div class="container">
+				<section>
+					<blockquote><img src="{% static 'images/01.png' %}" width="145" height="50"></blockquote>
+					 
+				</section>
+			</div>
+		</div>
+
+	<!-- Footer -->
+		<div id="footer">
+			<div class="container">
+				<section>
+					<ul class="contact">
+						<li><a href="https://twitter.com/" class="fa fa-twitter"><span>Twitter</span></a></li>
+						<li><a href="https://www.facebook.com/" class="fa fa-facebook"><span>Facebook</span></a></li>
+						<li><a href="https://www.instagram.com" class="fa fa-instagram"><span>Instagram</span></a></li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+	<!-- Copyright -->
+		<div id="copyright">
+			<div class="container">
+				<a>NTUST MIS</a><br>
+				<a>© Copyright 2019 | 網頁設計</a>
+			</div>
+		</div>
+
+		
+		<!-- jQuery -->
+		<script src="//code.jquery.com/jquery.js"></script>
+		<!-- Bootstrap JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+ 		<script src="Hello World"></script>
+	</body>
+</html>
